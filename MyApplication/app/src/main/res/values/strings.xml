@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Inwentaryzator</string>
+
+    <!-- Stona przedmiotow-->
+    <string name="ListaWyszukiwanie">Wyszukaj</string>
+    <string name="ListaNaglowek">Przedmioty</string>
+    <string name="ListaDescImg">Wyszukiwanie z listy</string>
+
+
+</resources>

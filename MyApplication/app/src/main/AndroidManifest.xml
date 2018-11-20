@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jj.home.myapplication">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logoinwentaryzatora"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppThemeRed">
+        <activity
+            android:name=".Launcher"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".StronaStartowa"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".StronaStartowa" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".StronaDodawaniaKontenerow"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".StronaDodawaniaKontenerow" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".StronaPrzedmiotowKontenera"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".StronaPrzedmiotowKontenera" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".StronaDodawaniaPrzedmiotow"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".StronaDodawaniaPrzedmiotow" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".PopUp"
+            android:theme="@style/AppPopup">
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".PopUp" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
