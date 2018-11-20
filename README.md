@@ -1,0 +1,1 @@
+# Inwentaryzator Android
