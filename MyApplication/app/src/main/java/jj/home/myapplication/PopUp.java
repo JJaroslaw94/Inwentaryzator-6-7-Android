@@ -18,9 +18,6 @@ public class PopUp extends AppCompatActivity {
 
         setContentView(R.layout.activity_pop_up);
 
-
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             TagiOrazNazwy = extras.getString("TagiOrazNazwy");

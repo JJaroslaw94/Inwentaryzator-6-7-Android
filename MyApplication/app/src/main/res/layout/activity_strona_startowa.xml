@@ -10,5 +10,6 @@
         android:layout_height="match_parent"
         android:columnWidth="110dp"
         android:gravity="center"
-        android:numColumns="2" />
+        android:numColumns="2"
+        android:longClickable="true"/>
 </android.support.design.widget.CoordinatorLayout>

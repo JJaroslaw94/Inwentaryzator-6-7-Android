@@ -1,19 +1,17 @@
 package jj.home.myapplication;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -37,12 +35,14 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
     private String ListaTagow[];
     boolean czySzukam = false;
     String szukana;
-   // private String carsSpecs[] = {"1.3","FWD","3 drzwiowy"};
+
     String nazwaAktualnegoInv;
     String nazwaAktualnegoPliku;
     String nazwaAktualnegoTagu;
     TextView Naglowek;
     TextView editText3s;
+
+    String[]  aktualneID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +60,8 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
 
         list = findViewById(R.id.listView1);
 
-
-
-
         UzupelnienieListy();
         WypelnijListe();
-
-
 
         editText3s = findViewById(R.id.editText3);
 
@@ -94,7 +89,7 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int i, long id) {
 
-            String start = "start";
+
                 if (ListaPrzedmiotow[i] == "Dodaj")
                 {
 
@@ -131,8 +126,32 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
                     intentPopUp.putExtra( "TagiOrazNazwy",  TagiOrazNazwy);
 
                     startActivity(intentPopUp);
-//TODO
+
                 }
+            }
+        });
+
+        list.setLongClickable(true);
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id) {
+
+                if (ListaPrzedmiotow[i] == "Dodaj")
+                {}else
+                {
+                    Intent intentPopUp = new Intent(".PopUpEdycjiPrzedmiotu");
+                    intentPopUp.putExtra( "nazwaPliku",  nazwaAktualnegoPliku);
+                    intentPopUp.putExtra( "wybranyPrzedmiot",  ListaPrzedmiotow[i]);
+                    intentPopUp.putExtra( "wybranyPrzedmiotID",  aktualneID[i]);
+                    intentPopUp.putExtra( "TagiPrzedmiotu",  ListaTagow[i]);
+
+                    intentPopUp.putExtra( "nazwaAktualnegoInv",  nazwaAktualnegoInv);
+                    intentPopUp.putExtra( "nazwaAktualnegoPliku",  nazwaAktualnegoPliku);
+                    intentPopUp.putExtra( "nazwaAktualnegoTagu",  nazwaAktualnegoTagu);
+
+                    startActivity(intentPopUp);
+                }
+                return true;
             }
         });
     }
@@ -160,12 +179,15 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
                 NodeList przedmioty = doc.getElementsByTagName("przedmiot");
                 String[] NazwyPrzedmiotow = new String[przedmioty.getLength()+1];
                 String[] NazwyTagow = new String[przedmioty.getLength()+1];
+                String[] aktualneIDtemp = new String[przedmioty.getLength()+1];
 
                 int licznik = 0;
                 for (int i = 0; i < przedmioty.getLength(); i++) {
 
                     Node city = przedmioty.item(i);
                     NodeList cityInfo = city.getChildNodes();
+                    Element att = (Element) przedmioty.item(i);
+                    aktualneIDtemp[i] = att.getAttribute("id");
                     for (int j = 0; j < cityInfo.getLength(); j++) {
                         Node info = cityInfo.item(j);
                         if (info.getNodeName().equals("nazwa")) {
@@ -192,8 +214,10 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
                             }
 
                     }
+
                 }
                 fis.close();
+                aktualneID = aktualneIDtemp;
                 if (czySzukam)
                 {
                     ListaPrzedmiotow =  new String[licznik];
@@ -217,7 +241,10 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (SAXException e) {
-                e.printStackTrace();
+                File file = getBaseContext().getFileStreamPath(nazwaAktualnegoPliku);
+                file.delete();
+                ListaPrzedmiotow = new String[]{"Dodaj"};
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -240,4 +267,10 @@ public class StronaPrzedmiotowKontenera extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(".StronaStartowa");
+        startActivity(intent);
+    }
 }

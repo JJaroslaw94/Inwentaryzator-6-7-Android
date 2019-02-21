@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -28,6 +29,8 @@ public class StronaStartowa extends AppCompatActivity {
     public String nazwaAktualnegoInv;
     public String nazwaAktualnegoPliku;
     public String nazwaAktualnegoTagu;
+    public String idKontenera;
+
     CustomGridViewActivity adapterViewAndroid;
     GridView androidGridView;
 
@@ -35,6 +38,7 @@ public class StronaStartowa extends AppCompatActivity {
     String[]  NazwyKontenerowGrid;
     String[]  NazwyPlikowGrid;
     String[]  NazwyTagowGrid;
+    String[]  aktualneID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +55,13 @@ public class StronaStartowa extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int i, long id) {
-                Toast.makeText(StronaStartowa.this, "GridView Item: " + NazwyKontenerowGrid[i], Toast.LENGTH_SHORT).show();
+                Toast.makeText(StronaStartowa.this, "Wybrano: " + NazwyKontenerowGrid[i], Toast.LENGTH_SHORT).show();
                 if (NazwyKontenerowGrid[i].equals("Dodaj"))
                 {
                     Intent intentDodajacyKontener = new Intent(".StronaDodawaniaKontenerow");
                     startActivity(intentDodajacyKontener);
                 }else
                 {
-                    //TODO
-
                     nazwaAktualnegoInv = NazwyKontenerowGrid[i];
                     nazwaAktualnegoPliku = NazwyPlikowGrid[i];
                     nazwaAktualnegoTagu = NazwyTagowGrid[i];
@@ -70,6 +72,29 @@ public class StronaStartowa extends AppCompatActivity {
                     intentPrzegladajacyPrzedmioty.putExtra( "nazwaAktualnegoTagu",  nazwaAktualnegoTagu);
                     startActivity(intentPrzegladajacyPrzedmioty);
                 }
+            }
+        });
+
+        androidGridView.setLongClickable(true);
+        androidGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long id) {
+                if (NazwyKontenerowGrid[i].equals("Dodaj"))
+                {}else
+                {
+                    nazwaAktualnegoInv = NazwyKontenerowGrid[i];
+                    nazwaAktualnegoPliku = NazwyPlikowGrid[i];
+
+
+                    Intent intentPopUp = new Intent(".PopUpEdycjiKontenera");
+
+                    intentPopUp.putExtra( "nazwaAktualnegoPliku",  nazwaAktualnegoPliku);
+                    intentPopUp.putExtra( "nazwaAktualnegoInv",  nazwaAktualnegoInv);
+                    intentPopUp.putExtra( "idKontenera",  aktualneID[i]);
+
+                    startActivity(intentPopUp);
+                }
+                return true;
             }
         });
 
@@ -102,11 +127,14 @@ public class StronaStartowa extends AppCompatActivity {
                 String[] NazwyKontenerowGridtemp = new String[zasobniki.getLength()+1];
                 String[] NazwyPlikowGridtemp = new String[zasobniki.getLength()+1];
                 String[] NazwyTagowGridtemp = new String[zasobniki.getLength()+1];
+                String[] aktualneIDtemp = new String[zasobniki.getLength()+1];
                 int[] NazwyObrazkowGridtemp = new int[zasobniki.getLength()+1];
                 for (int i = 0; i < zasobniki.getLength(); i++) {
 
                     Node city = zasobniki.item(i);
                     NodeList cityInfo = city.getChildNodes();
+                    Element att = (Element) zasobniki.item(i);
+                    aktualneIDtemp[i] = att.getAttribute("id");
                     for (int j = 0; j < cityInfo.getLength(); j++) {
                         Node info = cityInfo.item(j);
                         if (info.getNodeName().equals("nazwa")) {
@@ -131,12 +159,17 @@ public class StronaStartowa extends AppCompatActivity {
                 NazwyObrazkowGrid = NazwyObrazkowGridtemp;
                 NazwyPlikowGrid = NazwyPlikowGridtemp;
                 NazwyTagowGrid = NazwyTagowGridtemp;
+                aktualneID = aktualneIDtemp;
 
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (SAXException e) {
+                File file = getBaseContext().getFileStreamPath("zasobniki.xml");
+                file.delete();
+                NazwyObrazkowGrid = new int[]{R.drawable.dodaj};
+                NazwyKontenerowGrid = new String[]{"Dodaj"};
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

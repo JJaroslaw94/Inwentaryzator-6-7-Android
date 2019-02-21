@@ -11,7 +11,8 @@
         android:theme="@style/AppThemeRed">
         <activity
             android:name=".Launcher"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,6 +37,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".StronaPrzedmiotowKontenera"
             android:screenOrientation="portrait">
@@ -45,6 +47,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".StronaDodawaniaPrzedmiotow"
             android:screenOrientation="portrait">
@@ -54,11 +57,53 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".PopUp"
+
+        <activity
+            android:name=".PopUp"
+            android:screenOrientation="portrait"
             android:theme="@style/AppPopup">
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name=".PopUp" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PopUpEdycjiKontenera"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppPopup">
+            <intent-filter>
+                <action android:name=".PopUpEdycjiKontenera" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EdytowanieKonteneraEdycja"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".EdytowanieKonteneraEdycja" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PopUpEdycjiPrzedmiotu"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppPopup">
+            <intent-filter>
+                <action android:name=".PopUpEdycjiPrzedmiotu" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".EdytowaniePrzedmiotuEdycja"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name=".EdytowaniePrzedmiotuEdycja" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

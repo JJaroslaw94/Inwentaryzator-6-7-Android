@@ -1,6 +1,7 @@
 package jj.home.myapplication;
 
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -76,11 +77,8 @@ public class StronaDodawaniaKontenerow extends AppCompatActivity {
                 zdjecie = "R.drawable.inv";
             }
 
-
-
             XmlSerializer serializer = Xml.newSerializer();
             StringWriter writer = new StringWriter();
-
 
             if(CzyIstniejePlik("zasobniki.xml"))
                 {
@@ -147,6 +145,7 @@ public class StronaDodawaniaKontenerow extends AppCompatActivity {
                         serializer.endTag("", "zasobniki");
                         serializer.endDocument();
                         String result = writer.toString();
+
                         ZapsywanieWczytywanie.ZapisDoPliku(this, "zasobniki.xml", result);
 
 
